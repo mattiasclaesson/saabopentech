@@ -1,5 +1,4 @@
-TOPDIR  := $(shell cd ..; pwd)
-include $(TOPDIR)/Rules.make
+include ./Rules.make
 
 APP = saabopentech
 

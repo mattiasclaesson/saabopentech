@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
-#include "../ftd2xx.h"
+#include "ftd2xx.h"
 #include "info_texts.h"
 #include "kwp2000.h"
 
