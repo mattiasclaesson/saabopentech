@@ -80,6 +80,8 @@ BOOL closeChannel( FT_HANDLE ftHandle );
 BOOL sendFrame( FT_HANDLE ftHandle, CANMsg *pmsg );
 void getVersionInfo(FT_HANDLE ftHandle);
 void getSerialNumber( FT_HANDLE ftHandle );
+void setCodeRegister(FT_HANDLE ftHandle);
+void setMaskRegister(FT_HANDLE ftHandle);
 
 long gettickscount();
 
@@ -153,7 +155,7 @@ int main(int argc, char *argv[])
                "              M = Read Trionic information\n"
                "              B = Test brake lights (0|1)\n"
                "              U = Double unlocking with remote (0|1)\n"
-               /*"              A = Audio Head Unit (0=divorce,1=marry)\n"*/);
+               /*"              A = Audio Head Unit (0=divorce,1=marry)\n"*/  );
         return -1;
     }
     
@@ -185,9 +187,11 @@ int main(int argc, char *argv[])
 		printf("Number of devices is %d\n",numDevs);
 	} else {
 		printf("Number of devices is failed %d\n",numDevs); // FT_CreateDeviceInfoList failed
-	}	
+	}
+	
+	
 
-    printf("Opening CAN channel to Saab I-Bus (47,619 kBit/s)...");
+    printf("Opening CAN channel to Saab I-Bus (47,619 kBit/s)...\n");
     //// Open CAN Channel
     //if ( 0 >= ( h = canusb_Open( NULL,
     //                            "0xcb:0x9a",
@@ -213,12 +217,19 @@ int main(int argc, char *argv[])
 		//printf("FT_OpenEx() failed. rv=%d\n", ftStatus);
 		return 1;
 	}
-	printf("<#message#>\n");
 	
 	FT_SetTimeouts( h, 3000, 3000 );       // 3 second read + write timeouts
+	
+	void setCodeRegister(h);
+	void setMaskRegister(h);
     
-	getVersionInfo( h );
+	//getVersionInfo( h );
 	//getSerialNumber( h );
+	
+	if ( !openChannel( h ) ) {
+		printf("Failed to open channel\n");
+		return FALSE;
+	}
 
     if( wait_for_msg( h, 0, 1000, data ) != 0 )
     {
@@ -723,6 +734,7 @@ int init_connection( FT_HANDLE handle, unsigned char unit )
     
     init[3] = init_table[unit];
     
+	printf("send 0x220\n");
     // Send init
     if( !send_msg( handle, 0x220, init ) )
     {
@@ -1636,6 +1648,126 @@ void getVersionInfo(FT_HANDLE ftHandle)
 	
 }
 
+void setCodeRegister( FT_HANDLE ftHandle )
+{
+	FT_STATUS status;
+	char buf[80];
+	char c;
+	char *p;
+	unsigned long nBytesWritten;
+	unsigned long eventStatus;
+	unsigned long nRxCnt;// Number of characters in receive queue
+	unsigned long nTxCnt;// Number of characters in transmit queue
+	
+	memset( buf, 0, sizeof( buf ) );
+	printf("Set code register\n");
+	printf("==================\n");
+	
+	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
+	
+	// code
+	sprintf( buf, "M00000000\r" );
+	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
+		printf("Error: Failed to write command. return code = %d\n", status );
+		return;
+	}
+	
+	// Check if there is something to receive
+	while ( 1 ){
+		
+		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
+			
+			// If there are characters to receive
+			if ( nRxCnt ) {
+				
+				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
+					printf("Error: Failed to read data. return code = %d\n", status );
+					return;
+				}
+				
+				p = buf;
+				while ( *p ) {
+					if ( 0x0d == *p ) {
+						*p = 0;
+						break;
+					}
+					p++;
+				}
+				
+				printf( "code register set\n", buf  );
+				break;
+				
+			}
+			
+		}
+		else {
+			printf("Error: Failed to get status. return code = %d\n", status );
+			return;
+		}
+		
+	}	
+}
+
+void setMaskRegister( FT_HANDLE ftHandle )
+{
+	FT_STATUS status;
+	char buf[80];
+	char c;
+	char *p;
+	unsigned long nBytesWritten;
+	unsigned long eventStatus;
+	unsigned long nRxCnt;// Number of characters in receive queue
+	unsigned long nTxCnt;// Number of characters in transmit queue
+	
+	memset( buf, 0, sizeof( buf ) );
+	printf("Set mask register\n");
+	printf("==================\n");
+	
+	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
+	
+	// code
+	sprintf( buf, "mFFFFFFFF\r" );
+	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
+		printf("Error: Failed to write command. return code = %d\n", status );
+		return;
+	}
+	
+	// Check if there is something to receive
+	while ( 1 ){
+		
+		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
+			
+			// If there are characters to receive
+			if ( nRxCnt ) {
+				
+				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
+					printf("Error: Failed to read data. return code = %d\n", status );
+					return;
+				}
+				
+				p = buf;
+				while ( *p ) {
+					if ( 0x0d == *p ) {
+						*p = 0;
+						break;
+					}
+					p++;
+				}
+				
+				printf( "mask register set\n", buf  );
+				break;
+				
+			}
+			
+		}
+		else {
+			printf("Error: Failed to get status. return code = %d\n", status );
+			return;
+		}
+		
+	}	
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // getSerialNumber(FT_HANDLE ftHandle)
@@ -1738,6 +1870,7 @@ BOOL openChannel( FT_HANDLE ftHandle )
 		return FALSE;
   }
 
+  
   return TRUE;
 }
 
@@ -1807,14 +1940,14 @@ BOOL sendFrame( FT_HANDLE ftHandle, CANMsg *pmsg )
 	
 	size = strlen( txbuf );
 	
-	//printf("Transmit frame=%s",txbuf);
+	printf("Transmit frame=%s size=%d\n",txbuf,size);
 	
 	// Transmit frame
 	if ( !( FT_OK == FT_Write( ftHandle, txbuf, size, &retLen ) ) ) { 
 		return FALSE;
 	}
 	
-	
+	printf("written to device=%ld\n",retLen);
 	return TRUE;
 }
 
