@@ -26,7 +26,7 @@
 #define CANUSB_STATE_NONE  0
 #define CANUSB_STATE_MSG   1
 
-#define BUF_SIZE 0x1000
+#define BUF_SIZE 22
 
 // Message flags
 #define CANMSG_EXTENDED   0x80 // Extended CAN id
@@ -82,7 +82,7 @@ void getVersionInfo(FT_HANDLE ftHandle);
 void getSerialNumber( FT_HANDLE ftHandle );
 void setCodeRegister(FT_HANDLE ftHandle);
 void setMaskRegister(FT_HANDLE ftHandle);
-void setTimeStampOn( FT_HANDLE ftHandle );
+void setTimeStampOff( FT_HANDLE ftHandle );
 
 
 long gettickscount();
@@ -238,9 +238,9 @@ int main(int argc, char *argv[])
 	
 	FT_SetTimeouts( h, 3000, 3000 );       // 3 second read + write timeouts
 	
-	setCodeRegister(h);
-	setMaskRegister(h);
-	setTimeStampOn(h);
+	//setCodeRegister(h);
+	//setMaskRegister(h);
+	setTimeStampOff(h);
 	
 	if ( !openChannel( h ) ) {
 		printf("Failed to open channel\n");
@@ -248,8 +248,8 @@ int main(int argc, char *argv[])
 	}
 	printf("OK channel open\n");
 	
-	getVersionInfo( h );
-	getSerialNumber( h );
+	//getVersionInfo( h );
+	//getSerialNumber( h );
 
     if( wait_for_msg( h, 0, 1000, data ) != 0 )
     {
@@ -762,7 +762,7 @@ int init_connection( FT_HANDLE handle, unsigned char unit )
         return -1;
     }
     
-    if( wait_for_msg( handle, init_reply_table[unit], 500, data ) == init_reply_table[unit] )
+    if( wait_for_msg( handle, init_reply_table[unit], 2000, data ) == init_reply_table[unit] ) //500
     {
         return 0;
     }    
@@ -776,7 +776,7 @@ int init_connection( FT_HANDLE handle, unsigned char unit )
         return -1;
     }
     
-    if( wait_for_msg( handle, init_reply_table[unit], 500, data ) == init_reply_table[unit] )
+    if( wait_for_msg( handle, init_reply_table[unit], 2000, data ) == init_reply_table[unit] ) //500
     {
         return 0;
     }    
@@ -790,7 +790,7 @@ int init_connection( FT_HANDLE handle, unsigned char unit )
         return -1;
     }
 
-    if( wait_for_msg( handle, init_reply_table[unit], 500, data ) == init_reply_table[unit] )
+    if( wait_for_msg( handle, init_reply_table[unit], 2000, data ) == init_reply_table[unit] ) //500
     {
         return 0;
     }    
@@ -1533,6 +1533,7 @@ int wait_for_msg( FT_HANDLE handle, int id, int timeout, unsigned char *data )
         while( ret )
         {
 			ret = readFrame ( handle, &msg );
+			
             if( ret )
             {
                 if( msg.id == id || id == 0 )
@@ -1547,29 +1548,19 @@ int wait_for_msg( FT_HANDLE handle, int id, int timeout, unsigned char *data )
                     *(data+5) = msg.data[5];
                     *(data+6) = msg.data[6];
                     *(data+7) = msg.data[7];
-					printf("got_it msg.id 0x%x, expecting_id 0x%x\n", msg.id, id);
+					printf("got_it msg.id 0x%X, expecting_id 0x%X\n", msg.id, id);
                     break;
                 }
 				printf("msg.id=0x%03X, expecting_id=0x%03X\n", msg.id, id);
             }
-            else
-            {
-                printf("err %d ", ret);
-            }
-			printf("readFrame() after\n");
-        }
+		}
         if( (gettickscount() - dwStart) > timeout )
 		{
 			not_received = 0;	
 		}
-        else
-		{
-			printf("sleep\n");
-			sleep(1);
-		}
     }
     printf("timeout time: %d\n", gettickscount() - dwStart);
-    printf("msg.id=0x%03X, got_it=%d\n", msg.id, got_it);
+    printf("msg.id=0x%03X, got_it=%d not_received=%d\n", msg.id, got_it, not_received);
     return msg.id;
 }
 
@@ -1621,7 +1612,7 @@ int print_info( const char *string, const struct info_text *info_table)
 void getVersionInfo(FT_HANDLE ftHandle)
 {
 	FT_STATUS status;
-	char buf[80];
+	char buf[BUF_SIZE];
 	char c;
 	char *p;
 	unsigned long nBytesWritten;
@@ -1676,11 +1667,11 @@ void getVersionInfo(FT_HANDLE ftHandle)
 	
 }
 
-// Turn ON the Time Stamp feature.
-void setTimeStampOn( FT_HANDLE ftHandle )
+// Turn OFF the Time Stamp feature.
+void setTimeStampOff( FT_HANDLE ftHandle )
 {
 	FT_STATUS status;
-	char buf[80];
+	char buf[BUF_SIZE];
 	char c;
 	char *p;
 	unsigned long nBytesWritten;
@@ -1689,12 +1680,12 @@ void setTimeStampOn( FT_HANDLE ftHandle )
 	unsigned long nTxCnt;// Number of characters in transmit queue
 	
 	memset( buf, 0, sizeof( buf ) );
-	printf("setTimeStampOn()\n");
+	printf("setTimeStampOff()\n");
 	
 	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
 	
 	// code
-	sprintf( buf, "Z1\r" );
+	sprintf( buf, "Z0\r" );
 	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
 		printf("Error: Failed to write command. return code = %d\n", status );
 		return;
@@ -1739,7 +1730,7 @@ void setTimeStampOn( FT_HANDLE ftHandle )
 void setCodeRegister( FT_HANDLE ftHandle )
 {
 	FT_STATUS status;
-	char buf[80];
+	char buf[BUF_SIZE];
 	char c;
 	char *p;
 	unsigned long nBytesWritten;
@@ -1798,7 +1789,7 @@ void setCodeRegister( FT_HANDLE ftHandle )
 void setMaskRegister( FT_HANDLE ftHandle )
 {
 	FT_STATUS status;
-	char buf[80];
+	char buf[BUF_SIZE];
 	char c;
 	char *p;
 	unsigned long nBytesWritten;
@@ -1862,7 +1853,7 @@ void setMaskRegister( FT_HANDLE ftHandle )
 void getSerialNumber( FT_HANDLE ftHandle )
 {
 	FT_STATUS status;
-	char buf[80];
+	char buf[BUF_SIZE];
 	char c;
 	char *p;
 	unsigned long nBytesWritten;
@@ -1924,7 +1915,7 @@ void getSerialNumber( FT_HANDLE ftHandle )
 
 BOOL openChannel( FT_HANDLE ftHandle )
 {
-	char buf[80];
+	char buf[BUF_SIZE];
 	unsigned long size;
 	unsigned long retLen;
 	
@@ -1965,7 +1956,7 @@ BOOL openChannel( FT_HANDLE ftHandle )
 
 BOOL closeChannel( FT_HANDLE ftHandle )
 {
-	char buf[80];
+	char buf[BUF_SIZE];
 	unsigned long size;
 	unsigned long retLen;
 	
@@ -1988,7 +1979,7 @@ BOOL closeChannel( FT_HANDLE ftHandle )
 BOOL sendFrame( FT_HANDLE ftHandle, CANMsg *pmsg )
 {
 	int i; 
-	char txbuf[80];
+	char txbuf[BUF_SIZE];
 	unsigned long size;
 	unsigned long retLen;
 	
@@ -2140,27 +2131,28 @@ BOOL readFrame( FT_HANDLE ftHandle, CANMsg *msg )
 {
 	//CANMsg msg;
 	int i,j;
-	char buf[80];
+	char buf[BUF_SIZE];
 	unsigned long nRxCnt;
 	unsigned long nTxCnt;
 	unsigned long eventStatus;
-	unsigned long nRcvCnt;
+	//unsigned long nRcvCnt;
+	DWORD nRcvCnt;
 	char c;
 	
-	static char msgReceiveBuf[80];
+	static char msgReceiveBuf[BUF_SIZE];
 	static int cntMsgRcv = 0;
 	static int state = CANUSB_STATE_NONE;
 	
 	memset( msg, 0, sizeof( CANMsg ) );
 	
 	// Check if there is something to receive
-/*	if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
+	//if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
 		// If there are characters to receive
-		if ( nRxCnt ) {
+		//if ( nRxCnt ) {
 			// Must fit to buffer
-			if ( nRxCnt > sizeof( gbufferRx ) ) {
+			//if ( nRxCnt > sizeof( gbufferRx ) ) {
 				nRxCnt = sizeof( gbufferRx );
-			}*/
+			//}
 			
 			// Read data
 			if ( ( FT_OK == FT_Read( ftHandle, gbufferRx, nRxCnt, &nRcvCnt ) ) && ( nRcvCnt > 0 ) ) {
@@ -2190,27 +2182,28 @@ BOOL readFrame( FT_HANDLE ftHandle, CANMsg *msg )
 								return FALSE;
 							}
 							
-							if ( msg->flags & CANMSG_EXTENDED  ) {
-								printf("Extended ");
-							}
-							else {
-								printf("Standard ");
-							}
-							
-							printf("message received: id=%X len=%d timestamp=%X ", 
-								   msg->id, 
-								   msg->len, 
-								   msg->timestamp ); 
-							
-							if ( msg->len ) {
-								printf("data=");
-								
-								for ( j=0; j<msg->len; j++ ) {
-									printf("%02X ", msg->data[j]);
-								}
-							}
-							
-							printf("\n");
+							//if ( msg->flags & CANMSG_EXTENDED  ) {
+							//	printf("Extended ");
+							//}
+							//else {
+							//	printf("Standard ");
+							//}
+							//
+							//printf("message received: id=%lX len=%d timestamp=%ld ", 
+							//	   msg->id, 
+							//	   msg->len, 
+							//	   msg->timestamp ); 
+							//
+							//if ( msg->len ) {
+							//	printf("data=");
+							//	
+							//	for ( j=0; j<msg->len; j++ ) {
+							//		printf("%02X ", msg->data[j]);
+							//	}
+							//}
+							//
+							//
+							//printf("\n");
 							
 							gnReceivedFrames++;
 							state = CANUSB_STATE_NONE;
@@ -2219,9 +2212,9 @@ BOOL readFrame( FT_HANDLE ftHandle, CANMsg *msg )
 					} // STATE_MSG
 				} // for each char
 			} // Read data
-	/*	} // characters to receive
-	} // getstatus */
-	return TRUE;
+	//	} // characters to receive
+	//} // getstatus
+	return FALSE;
 }
 
 long gettickscount()
