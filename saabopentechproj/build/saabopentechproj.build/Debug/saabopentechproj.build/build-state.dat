@@ -1,0 +1,188 @@
+Tsaabopentechproj
+v7
+r0
+t323634851.802990
+cCheck dependencies
+cDistributed-CompileC build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/main.o /Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c normal x86_64 c com.apple.compilers.gcc.4_2
+cLd /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj normal x86_64
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004CAA740B00000000000000EE
+t1286239243
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/pthread.h
+c000000004BBD2CE900000000000038F0
+t1270689001
+s14576
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/signal.h
+c000000004BBD2CE900000000000014F0
+t1270689001
+s5360
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdio.h
+c000000004BBD2CE90000000000004174
+t1270689001
+s16756
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/stdlib.h
+c000000004BBD2CE90000000000002DF5
+t1270689001
+s11765
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/string.h
+c000000004BBD2CE90000000000001731
+t1270689001
+s5937
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/sys/time.h
+c000000004C2399480000000000001E17
+t1277401416
+s7703
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/unistd.h
+c000000004BBD2CE9000000000000563E
+t1270689001
+s22078
+
+N/Developer/SDKs/MacOSX10.6.sdk/usr/local/lib/libftd2xx.dylib
+c000000004D3C57340000000000067B50
+t1295800116
+s424784
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/WinTypes.h
+c000000004D44945B0000000000000900
+t1296340059
+s2304
+i<sys/time.h>
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj
+t1301942051
+s38832
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/main.o
+t1301942051
+s54108
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/saabopentechproj.LinkFileList
+c000000004D7E567D0000000000000090
+t1300125309
+s144
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/ftd2xx.h
+c000000004D4493C5000000000000600B
+t1296339909
+s24587
+i<pthread.h>
+i"WinTypes.h"
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/info_texts.h
+c000000004D44926D000000000000014A
+t1296339565
+s330
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/kwp2000.h
+c000000004D44926D000000000000138E
+t1296339565
+s5006
+
+N/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c
+c000000004D9A0F23000000000000ED59
+t1301942051
+s60761
+i<stdio.h>
+i<stdlib.h>
+i<unistd.h>
+i<signal.h>
+i<string.h>
+i"ftd2xx.h"
+i"info_texts.h"
+i"kwp2000.h"
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies323634851#323634851#0(0"0(0#1#0"8617253056#0"0#
+
+CDistributed-CompileC build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/main.o /Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c normal x86_64 c com.apple.compilers.gcc.4_2
+s323634851.474886
+e323634851.778476
+r1
+xDistributed-CompileC
+xbuild/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/main.o
+x/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c
+xnormal
+xx86_64
+xc
+xcom.apple.compilers.gcc.4_2
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'main':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:122: warning: unused variable 'numDevs'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:121: warning: unused variable 'blipp'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:120: warning: unused variable 'iport'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:119: warning: unused variable 'rsplen'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:118: warning: unused variable 'rspcode'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:117: warning: unused variable 'dwDiff'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:117: warning: unused variable 'dwStart'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:116: warning: unused variable 'verinfo'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:115: warning: unused variable 'exit'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:115: warning: unused variable 'buf2'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:114: warning: unused variable 'last_timestamp'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:114: warning: unused variable 'timestamp'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'value'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'ret'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'ch'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:112: warning: unused variable 'log'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:111: warning: unused variable 'msg'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'ask_obd2_value':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1433: warning: unused variable 'length'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'wait_for_msg':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1560: warning: format '%d' expects type 'int', but argument 2 has type 'long int'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1561: warning: format '%03X' expects type 'unsigned int', but argument 2 has type 'long unsigned int'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'getVersionInfo':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1627: warning: passing argument 4 of 'FT_Write' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1640: warning: passing argument 4 of 'FT_Read' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1614: warning: unused variable 'c'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setTimeStampOff':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1687: warning: passing argument 4 of 'FT_Write' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1700: warning: passing argument 4 of 'FT_Read' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1673: warning: unused variable 'c'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setCodeRegister':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1746: warning: passing argument 4 of 'FT_Write' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1759: warning: passing argument 4 of 'FT_Read' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1732: warning: unused variable 'c'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setMaskRegister':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1805: warning: passing argument 4 of 'FT_Write' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1818: warning: passing argument 4 of 'FT_Read' from incompatible pointer type
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1791: warning: unused variable 'c'
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'sendFrame':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1983: warning: '0' flag ignored with precision and '%X' printf format
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1987: warning: '0' flag ignored with precision and '%X' printf format
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1992: warning: '0' flag ignored with precision and '%X' printf format
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1996: warning: '0' flag ignored with precision and '%X' printf format
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:2004: warning: '0' flag ignored with precision and '%X' printf format
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'readFrame':
+o/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:2098: warning: format '%03x' expects type 'unsigned int *', but argument 3 has type 'long unsigned int *'
+lSLF07#2@89"Distribute compilation of /Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#323634851#0(7138"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'main':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:122: warning: unused variable 'numDevs'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:121: warning: unused variable 'blipp'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:120: warning: unused variable 'iport'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:119: warning: unused variable 'rsplen'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:118: warning: unused variable 'rspcode'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:117: warning: unused variable 'dwDiff'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:117: warning: unused variable 'dwStart'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:116: warning: unused variable 'verinfo'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:115: warning: unused variable 'exit'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:115: warning: unused variable 'buf2'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:114: warning: unused variable 'last_timestamp'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:114: warning: unused variable 'timestamp'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'value'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'ret'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:113: warning: unused variable 'ch'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:112: warning: unused variable 'log'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:111: warning: unused variable 'msg'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'ask_obd2_value':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1433: warning: unused variable 'length'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'wait_for_msg':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1560: warning: format '%d' expects type 'int', but argument 2 has type 'long int'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1561: warning: format '%03X' expects type 'unsigned int', but argument 2 has type 'long unsigned int'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'getVersionInfo':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1627: warning: passing argument 4 of 'FT_Write' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1635: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1640: warning: passing argument 4 of 'FT_Read' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1614: warning: unused variable 'c'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setTimeStampOff':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1687: warning: passing argument 4 of 'FT_Write' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1695: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1700: warning: passing argument 4 of 'FT_Read' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1673: warning: unused variable 'c'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setCodeRegister':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1746: warning: passing argument 4 of 'FT_Write' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1754: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1759: warning: passing argument 4 of 'FT_Read' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1732: warning: unused variable 'c'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'setMaskRegister':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1805: warning: passing argument 4 of 'FT_Write' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 2 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 3 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1813: warning: passing argument 4 of 'FT_GetStatus' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1818: warning: passing argument 4 of 'FT_Read' from incompatible pointer type/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1791: warning: unused variable 'c'/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'sendFrame':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1983: warning: '0' flag ignored with precision and '%X' printf format/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1987: warning: '0' flag ignored with precision and '%X' printf format/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1992: warning: '0' flag ignored with precision and '%X' printf format/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:1996: warning: '0' flag ignored with precision and '%X' printf format/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:2004: warning: '0' flag ignored with precision and '%X' printf format/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c: In function 'readFrame':/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c:2098: warning: format '%03x' expects type 'unsigned int *', but argument 3 has type 'long unsigned int *'50(22@25"Unused variable 'numDevs'323634851#85#104#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#122#0#122#0#19"unused variable '*'0(22@23"Unused variable 'blipp'323634851#189#102#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#121#0#121#0#19"unused variable '*'0(22@23"Unused variable 'iport'323634851#291#102#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#120#0#120#0#19"unused variable '*'0(22@24"Unused variable 'rsplen'323634851#393#103#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#119#0#119#0#19"unused variable '*'0(22@25"Unused variable 'rspcode'323634851#496#104#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#118#0#118#0#19"unused variable '*'0(22@24"Unused variable 'dwDiff'323634851#600#103#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#117#0#117#0#19"unused variable '*'0(22@25"Unused variable 'dwStart'323634851#703#104#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#117#0#117#0#19"unused variable '*'0(22@25"Unused variable 'verinfo'323634851#807#104#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#116#0#116#0#19"unused variable '*'0(22@22"Unused variable 'exit'323634851#911#101#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#115#0#115#0#19"unused variable '*'0(22@22"Unused variable 'buf2'323634851#1012#101#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#115#0#115#0#19"unused variable '*'0(22@32"Unused variable 'last_timestamp'323634851#1113#111#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#114#0#114#0#19"unused variable '*'0(22@27"Unused variable 'timestamp'323634851#1224#106#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#114#0#114#0#19"unused variable '*'0(22@23"Unused variable 'value'323634851#1330#102#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#113#0#113#0#19"unused variable '*'0(22@21"Unused variable 'ret'323634851#1432#100#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#113#0#113#0#19"unused variable '*'0(22@20"Unused variable 'ch'323634851#1532#99#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#113#0#113#0#19"unused variable '*'0(22@21"Unused variable 'log'323634851#1631#100#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#112#0#112#0#19"unused variable '*'0(22@21"Unused variable 'msg'323634851#1731#100#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#111#0#111#0#19"unused variable '*'0(22@24"Unused variable 'length'323634851#1926#104#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1433#0#1433#0#19"unused variable '*'0(22@66"Format '%d' expects type 'int', but argument 2 has type 'long int'323634851#2123#146#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1560#0#1560#0#56"format '*' expects type '*', but argument * has type '*'0(22@86"Format '%03X' expects type 'unsigned int', but argument 2 has type 'long unsigned int'323634851#2269#166#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1561#0#1561#0#56"format '*' expects type '*', but argument * has type '*'0(22@63"Passing argument 4 of 'FT_Write' from incompatible pointer type323634851#2530#143#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1627#0#1627#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 2 of 'FT_GetStatus' from incompatible pointer type323634851#2673#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1635#0#1635#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 3 of 'FT_GetStatus' from incompatible pointer type323634851#2820#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1635#0#1635#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 4 of 'FT_GetStatus' from incompatible pointer type323634851#2967#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1635#0#1635#0#56"passing argument * of '*' from incompatible pointer type0(22@62"Passing argument 4 of 'FT_Read' from incompatible pointer type323634851#3114#142#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1640#0#1640#0#56"passing argument * of '*' from incompatible pointer type0(22@19"Unused variable 'c'323634851#3256#99#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1614#0#1614#0#19"unused variable '*'0(22@63"Passing argument 4 of 'FT_Write' from incompatible pointer type323634851#3451#143#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1687#0#1687#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 2 of 'FT_GetStatus' from incompatible pointer type323634851#3594#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1695#0#1695#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 3 of 'FT_GetStatus' from incompatible pointer type323634851#3741#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1695#0#1695#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 4 of 'FT_GetStatus' from incompatible pointer type323634851#3888#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1695#0#1695#0#56"passing argument * of '*' from incompatible pointer type0(22@62"Passing argument 4 of 'FT_Read' from incompatible pointer type323634851#4035#142#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1700#0#1700#0#56"passing argument * of '*' from incompatible pointer type0(22@19"Unused variable 'c'323634851#4177#99#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1673#0#1673#0#19"unused variable '*'0(22@63"Passing argument 4 of 'FT_Write' from incompatible pointer type323634851#4372#143#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1746#0#1746#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 2 of 'FT_GetStatus' from incompatible pointer type323634851#4515#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1754#0#1754#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 3 of 'FT_GetStatus' from incompatible pointer type323634851#4662#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1754#0#1754#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 4 of 'FT_GetStatus' from incompatible pointer type323634851#4809#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1754#0#1754#0#56"passing argument * of '*' from incompatible pointer type0(22@62"Passing argument 4 of 'FT_Read' from incompatible pointer type323634851#4956#142#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1759#0#1759#0#56"passing argument * of '*' from incompatible pointer type0(22@19"Unused variable 'c'323634851#5098#99#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1732#0#1732#0#19"unused variable '*'0(22@63"Passing argument 4 of 'FT_Write' from incompatible pointer type323634851#5293#143#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1805#0#1805#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 2 of 'FT_GetStatus' from incompatible pointer type323634851#5436#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1813#0#1813#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 3 of 'FT_GetStatus' from incompatible pointer type323634851#5583#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1813#0#1813#0#56"passing argument * of '*' from incompatible pointer type0(22@67"Passing argument 4 of 'FT_GetStatus' from incompatible pointer type323634851#5730#147#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1813#0#1813#0#56"passing argument * of '*' from incompatible pointer type0(22@62"Passing argument 4 of 'FT_Read' from incompatible pointer type323634851#5877#142#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1818#0#1818#0#56"passing argument * of '*' from incompatible pointer type0(22@19"Unused variable 'c'323634851#6019#99#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1791#0#1791#0#19"unused variable '*'0(22@54"'0' flag ignored with precision and '%X' printf format323634851#6208#134#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1983#0#1983#0#0"0(22@54"'0' flag ignored with precision and '%X' printf format323634851#6342#134#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1987#0#1987#0#0"0(22@54"'0' flag ignored with precision and '%X' printf format323634851#6476#134#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1992#0#1992#0#0"0(22@54"'0' flag ignored with precision and '%X' printf format323634851#6610#134#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#1996#0#1996#0#0"0(22@54"'0' flag ignored with precision and '%X' printf format323634851#6744#134#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#2004#0#2004#0#0"0(22@90"Format '%03x' expects type 'unsigned int *', but argument 3 has type 'long unsigned int *'323634851#6968#170#0(6@63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c323634851#2098#0#2098#0#56"format '*' expects type '*', but argument * has type '*'0(0#0#63"/Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c8617382336#1836"    cd /Users/mattiasclaesson/git/saabopentech/saabopentechproj    setenv DISTCC_COMPILER "gcc version 4.2.1 (Apple Inc. build 5664)"    setenv DISTCC_HOSTS "localhost:3632/2"    setenv DISTCC_SYSTEM "10.6.6 (10J567, i386)"    setenv LANG en_US.US-ASCII    /Developer/usr/bin/distcc /Developer/usr/bin/gcc-4.2 -x c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/saabopentechproj-generated-files.hmap -I/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/saabopentechproj-own-target-headers.hmap -I/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/saabopentechproj-all-target-headers.hmap -iquote /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/saabopentechproj-project-headers.hmap -fpch-preprocess -F/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug -I/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/include -I/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/DerivedSources/x86_64 -I/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/DerivedSources -c /Users/mattiasclaesson/git/saabopentech/saabopentechproj/main.c -o /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/main.o0#
+
+CLd /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj normal x86_64
+s323634851.778575
+e323634851.802936
+r1
+xLd
+x/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj
+xnormal
+xx86_64
+lSLF07#2@90"Link /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj323634851#323634851#0(0"0(0#0#0"8617067072#633"    cd /Users/mattiasclaesson/git/saabopentech/saabopentechproj    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug -F/Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug -filelist /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/saabopentechproj.build/Debug/saabopentechproj.build/Objects-normal/x86_64/saabopentechproj.LinkFileList -mmacosx-version-min=10.6 -lftd2xx -o /Users/mattiasclaesson/git/saabopentech/saabopentechproj/build/Debug/saabopentechproj0#
+
