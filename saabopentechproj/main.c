@@ -17,29 +17,11 @@
 #include <string.h>
 #include "ftd2xx.h"
 #include "info_texts.h"
-#include "kwp2000.h"
+#include "lawcel_canusb_ftd2xx.h"
 
-#define MAX( a, b )( ( (a) > (b) ) ? (a) : (b) )
-#define MIN( a, b )( ( (a) < (b) ) ? (a) : (b) )
-#define ABS( a )(( (int) (a) < 0 ) ? ((a) ^ 0xffffffff) + 1 : (a) )
-
-#define CANUSB_STATE_NONE  0
-#define CANUSB_STATE_MSG   1
-
-#define BUF_SIZE 100
-
-// Message flags
-#define CANMSG_EXTENDED   0x80 // Extended CAN id
-#define CANMSG_RTR        0x40 // Remote frame
-
-// CAN Frame
-typedef struct {
-	unsigned long id;         // Message id
-	unsigned long timestamp;  // timestamp in milliseconds
-	unsigned char flags;      // [extended_id|1][RTR:1][reserver:6]
-	unsigned char len;        // Frame size (0.8)
-	unsigned char data[ 8 ];  // Databytes 0..7
-} CANMsg;
+//#define MAX( a, b )( ( (a) > (b) ) ? (a) : (b) )
+//#define MIN( a, b )( ( (a) < (b) ) ? (a) : (b) )
+//#define ABS( a )(( (int) (a) < 0 ) ? ((a) ^ 0xffffffff) + 1 : (a) )
 
 #define RELEASE_VERSION "0.40"
 #define RELEASE_DATE    "2007-09-01"
@@ -75,14 +57,7 @@ int print_info( const char *string, const struct info_text *info_table);
 // Prototypes
 BOOL canusbToCanMsg( char * p, CANMsg *pMsg );
 BOOL readFrame( FT_HANDLE ftHandle, CANMsg *msg );
-BOOL openChannel( FT_HANDLE ftHandle );
-BOOL closeChannel( FT_HANDLE ftHandle );
 BOOL sendFrame( FT_HANDLE ftHandle, CANMsg *pmsg );
-void getVersionInfo(FT_HANDLE ftHandle);
-void getSerialNumber( FT_HANDLE ftHandle );
-void setCodeRegister(FT_HANDLE ftHandle);
-void setMaskRegister(FT_HANDLE ftHandle);
-void setTimeStampOff( FT_HANDLE ftHandle );
 FT_STATUS writeCommand( FT_HANDLE ftHandle, char *cmd, int cmd_size );
 FT_STATUS readCommand( FT_HANDLE ftHandle, int length, char *cmd, int *cmd_size );
 
@@ -108,56 +83,13 @@ void quit()
 int main(int argc, char *argv[])
 {
 	FT_STATUS ftStatus;
-    CANMsg msg;
-    FILE *log;
-    int ch, ret, i, k, value;
-    int timestamp, last_timestamp;
-    unsigned char data[8], buf[256], buf2[256], exit;
-    LPTSTR verinfo;
-    long dwStart, dwDiff;
-    enum responseCode rspcode;
-    unsigned char rsplen;
-	int iport = 0;
-	FT_STATUS blipp; 
-	DWORD numDevs;
+    int i, k;
+    unsigned char data[8], buf[256];
 
     printf("SaabOpenTech v%s - Freeware Saab maintenance terminal\r\n"
-           "by Tomi Liljemark %s\r\n\r\n", RELEASE_VERSION, RELEASE_DATE);
+           "by Tomi Liljemark %s\r\nMattias Claesson (Macos X)\r\n", RELEASE_VERSION, RELEASE_DATE);
 	
 	signal(SIGINT, quit);		// trap ctrl-c call quit fn 
-
-/*
-    struct messageKWP kwpmsg;
-    
-    strcpy( buf, "\x3E\x06\xAA\xBB\xCC\xDD\xEE\xFF\x11\x22\x33\x44\x55\x66\x77\x88\x99\xAB\xAC\xAD\xAE\xAF" );
-
-    kwpmsg.target = targetSID;
-    kwpmsg.serviceId = inputOutputControlByLocalIdentifier;
-    kwpmsg.lenParam = 2;
-    kwpmsg.param = buf;
-    kwpmsg.lenRsp = &rsplen;
-    kwpmsg.response = buf2;
-
-    rspcode = sendRequestKWP( &kwpmsg );
-    
-    printf("response=0x%02x, len=%d, data=", rspcode, rsplen);
-    for( i = 0; i < rsplen; i++ ) printf("0x%02X ", buf2[i] );
-    printf("\n");
-    return 0;
-*/
-
-/*
-    print_info( "5042403SA6001.06001.00MIU2303010105", miu_info_text );
-    printf("\n");
-    print_info( "5263223SAKM  11.2SID20103230000", sid_info_text );
-    printf("\n");
-    print_info( "5047600F1044601ff050104240302040103200101", acc_info_text );
-    printf("\n");
-    print_info( "5042189SA000000555C18.01TWICE0404010104", twice_info_text );
-    printf("\n");
-    print_info( "5040670SA          A8032470523AEHU1802980201", ehu_info_text );
-    return;
-*/
 
     if( argc < 2 )
     {
@@ -193,60 +125,26 @@ int main(int argc, char *argv[])
         }
     }
 	
-	FT_SetVIDPID(0x0403,0xffa8);
-	
-	// create the device information list 
-	/*blipp = FT_CreateDeviceInfoList(&numDevs); 
-	if (blipp == FT_OK) {
-		printf("Number of devices is %d\n",numDevs);
-	} else {
-		printf("Number of devices is failed %d\n",numDevs); // FT_CreateDeviceInfoList failed
-	}
-	*/
+	initializeCanUsb();
 
     printf("Opening CAN channel to Saab I-Bus (47,619 kBit/s)...");
-    //// Open CAN Channel
-    //if ( 0 >= ( h = canusb_Open( NULL,
-    //                            "0xcb:0x9a",
-    //                            CANUSB_ACCEPTANCE_CODE_ALL,
-    //                            CANUSB_ACCEPTANCE_MASK_ALL,
-    //                            CANUSB_FLAG_TIMESTAMP ) ) ) {
-    //    printf("Failed to open device\n");
-    //    return -1;
-    //}
-	
-	// Note!
-	// The second version of open should work from version 0.4.9 it may be prefered
-	// in many situations. On Fedora Core 4, kernal 2.6.15 it fails however.
-	//ftStatus = FT_Open(iport, &h);
-	ftStatus = FT_OpenEx( "LWT97OO7", FT_OPEN_BY_SERIAL_NUMBER, &h);
-	//ftStatus = FT_OpenEx( NULL, FT_OPEN_BY_SERIAL_NUMBER, &h); // First found
+	ftStatus = FT_OpenEx( "CANUSB", FT_OPEN_BY_DESCRIPTION, &h);
 	if(ftStatus != FT_OK) {
-		/* 
-		 This can fail if the ftdi_sio driver is loaded
-		 use lsmod to check this and rmmod ftdi_sio to remove
-		 also rmmod usbserial
-		 */
 		printf("FT_OpenEx() failed. rv=%d\n", ftStatus);
 		return 1;
 	}
 	
-
-	
-	FT_SetTimeouts( h, 3000, 3000 );       // 3 second read + write timeouts
-	
-	//setCodeRegister(h);
-	//setMaskRegister(h);
+	setTimeouts( h, 3000, 3000 );       // 3 second read + write timeouts
 	setTimeStampOff(h);
 	
-	if ( !openChannel( h ) ) {
+	//bitrates:
+	//  "scb9a" == (47,619kBits/s (0xcb:0x9a)
+	//"S6" == 500kbit/s
+	if ( !openChannel( h, "scb9a\r" ) ) {
 		printf("Failed to open channel\n");
 		return FALSE;
 	}
 	printf("OK channel open\n");
-	
-	//getVersionInfo( h );
-	//getSerialNumber( h );
 	
 	if( wait_for_msg( h, 0, 1000, data ) != 0 )
 	{
@@ -734,10 +632,8 @@ int main(int argc, char *argv[])
             }
         }
     }
-
-	printf("\nBegin CAN channel close.\n");
+	
     closeChannel( h );
-    printf("\nCAN channel closed.\n");
 
     return 0;
 }
@@ -1430,7 +1326,7 @@ int query_info( FT_HANDLE handle, unsigned char unit, unsigned char *answer)
 
 char ask_obd2_value( FT_HANDLE handle, unsigned char id, int *value)
 {
-    unsigned char data[8], length, i;
+    unsigned char data[8], i;
     unsigned char query[8] = { 0x40, 0xA1, 0x02, 0x01, 0x00, 0x00, 0x00, 0x00 };
     unsigned char ack[8]   = { 0x40, 0xA1, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x00 };
     char value_ok;
@@ -1518,7 +1414,7 @@ int wait_for_msg( FT_HANDLE handle, int id, int timeout, unsigned char *data )
     long dwStart;
 	BOOL ret;
 	
-	FT_SetTimeouts( handle, timeout, timeout );
+	setTimeouts( handle, timeout, timeout );
     
     dwStart = gettickscount();
     timeout_temp = timeout;
@@ -1546,10 +1442,8 @@ int wait_for_msg( FT_HANDLE handle, int id, int timeout, unsigned char *data )
                     *(data+5) = msg.data[5];
                     *(data+6) = msg.data[6];
                     *(data+7) = msg.data[7];
-					//printf("got_it msg.id 0x%X, expecting_id 0x%X\n", msg.id, id);
                     break;
                 }
-				//printf("msg.id=0x%03X, expecting_id=0x%03X\n", msg.id, id);
             }
 		}
         if( (gettickscount() - dwStart) > timeout )
@@ -1557,8 +1451,6 @@ int wait_for_msg( FT_HANDLE handle, int id, int timeout, unsigned char *data )
 			not_received = 0;	
 		}
     }
-    printf("timeout time: %d\n", gettickscount() - dwStart);
-    printf("msg.id=0x%03X, got_it=%d not_received=%d\n", msg.id, got_it, not_received);
     return msg.id;
 }
 
@@ -1603,536 +1495,7 @@ int print_info( const char *string, const struct info_text *info_table)
     return 0;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-// getVersionInfo(FT_HANDLE ftHandle)
-//
 
-void getVersionInfo(FT_HANDLE ftHandle)
-{
-	FT_STATUS status;
-	char buf[BUF_SIZE];
-	char c;
-	char *p;
-	unsigned long nBytesWritten;
-	unsigned long eventStatus;
-	unsigned long nRxCnt;// Number of characters in receive queue
-	unsigned long nTxCnt;// Number of characters in transmit queue
-	
-	memset( buf, 0, sizeof( buf ) );
-	printf("getVersionInfo()\n");
-	
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	
-	sprintf( buf, "V\r" );
-	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
-		printf("Error: Failed to write command. return code = %d\n", status );
-		return;
-	}
-	
-	// Check if there is something to receive
-	while ( 1 ){
-		
-		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
-			
-			// If there are characters to receive
-			if ( nRxCnt ) {
-				
-				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
-					printf("Error: Failed to read data. return code = %d\n", status );
-					return;
-				}
-				
-				p = buf;
-				while ( *p ) {
-					if ( 0x0d == *p ) {
-						*p = 0;
-						break;
-					}
-					p++;
-				}
-				printf( "Version = %s\n", buf );
-				break;
-				
-			}
-			
-		}
-		else {
-			printf("Error: Failed to get status. return code = %d\n", status );
-			return;
-		}
-		
-	}
-	
-}
-
-// Turn OFF the Time Stamp feature.
-void setTimeStampOff( FT_HANDLE ftHandle )
-{
-	FT_STATUS status;
-	char buf[BUF_SIZE];
-	char c;
-	char *p;
-	unsigned long nBytesWritten;
-	unsigned long eventStatus;
-	unsigned long nRxCnt;// Number of characters in receive queue
-	unsigned long nTxCnt;// Number of characters in transmit queue
-	
-	memset( buf, 0, sizeof( buf ) );
-	printf("setTimeStampOff()\n");
-	
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	
-	// code
-	sprintf( buf, "Z0\r" );
-	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
-		printf("Error: Failed to write command. return code = %d\n", status );
-		return;
-	}
-	
-	// Check if there is something to receive
-	while ( 1 ){
-		
-		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
-			
-			// If there are characters to receive
-			if ( nRxCnt ) {
-				
-				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
-					printf("Error: Failed to read data. return code = %d\n", status );
-					return;
-				}
-				
-				p = buf;
-				while ( *p ) {
-					if ( 0x0d == *p ) {
-						*p = 0;
-						break;
-					}
-					p++;
-				}
-				
-				printf( "OK timestamp\n", buf  );
-				break;
-				
-			}
-			
-		}
-		else {
-			printf("Error: Failed to get status. return code = %d\n", status );
-			return;
-		}
-		
-	}	
-}
-
-void setCodeRegister( FT_HANDLE ftHandle )
-{
-	FT_STATUS status;
-	char buf[BUF_SIZE];
-	char c;
-	char *p;
-	unsigned long nBytesWritten;
-	unsigned long eventStatus;
-	unsigned long nRxCnt;// Number of characters in receive queue
-	unsigned long nTxCnt;// Number of characters in transmit queue
-	
-	memset( buf, 0, sizeof( buf ) );
-	printf("setCodeRegister()\n");
-	
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	
-	// code
-	sprintf( buf, "M00000000\r" );
-	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
-		printf("Error: Failed to write command. return code = %d\n", status );
-		return;
-	}
-	
-	// Check if there is something to receive
-	while ( 1 ){
-		
-		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
-			
-			// If there are characters to receive
-			if ( nRxCnt ) {
-				
-				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
-					printf("Error: Failed to read data. return code = %d\n", status );
-					return;
-				}
-				
-				p = buf;
-				while ( *p ) {
-					if ( 0x0d == *p ) {
-						*p = 0;
-						break;
-					}
-					p++;
-				}
-				
-				printf( "OK code\n", buf  );
-				break;
-				
-			}
-			
-		}
-		else {
-			printf("Error: Failed to get status. return code = %d\n", status );
-			return;
-		}
-		
-	}	
-}
-
-void setMaskRegister( FT_HANDLE ftHandle )
-{
-	FT_STATUS status;
-	char buf[BUF_SIZE];
-	char c;
-	char *p;
-	unsigned long nBytesWritten;
-	unsigned long eventStatus;
-	unsigned long nRxCnt;// Number of characters in receive queue
-	unsigned long nTxCnt;// Number of characters in transmit queue
-	
-	memset( buf, 0, sizeof( buf ) );
-	printf("setMaskRegister()\n");
-	
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	
-	// code
-	sprintf( buf, "mFFFFFFFF\r" );
-	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
-		printf("Error: Failed to write command. return code = %d\n", status );
-		return;
-	}
-	
-	// Check if there is something to receive
-	while ( 1 ){
-		
-		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
-			
-			// If there are characters to receive
-			if ( nRxCnt ) {
-				
-				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
-					printf("Error: Failed to read data. return code = %d\n", status );
-					return;
-				}
-				
-				p = buf;
-				while ( *p ) {
-					if ( 0x0d == *p ) {
-						*p = 0;
-						break;
-					}
-					p++;
-				}
-				
-				printf( "OK mask\n", buf  );
-				break;
-				
-			}
-			
-		}
-		else {
-			printf("Error: Failed to get status. return code = %d\n", status );
-			return;
-		}
-		
-	}	
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////
-// getSerialNumber(FT_HANDLE ftHandle)
-//
-
-void getSerialNumber( FT_HANDLE ftHandle )
-{
-	FT_STATUS status;
-	char buf[BUF_SIZE];
-	char *p;
-	DWORD nBytesWritten;
-	DWORD eventStatus;
-	DWORD nRxCnt;// Number of characters in receive queue
-	DWORD nTxCnt;// Number of characters in transmit queue
-	
-	memset( buf, 0, sizeof( buf ) );
-	printf("getSerialNumber()\n");
-	
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	
-	sprintf( buf, "N\r" );
-	if ( FT_OK != ( status = FT_Write( ftHandle, buf, strlen( buf ), &nBytesWritten ) ) ) {
-		printf("Error: Failed to write command. return code = %d\n", status );
-		return;
-	}
-	
-	// Check if there is something to receive
-	while ( 1 ){
-		
-		if ( FT_OK == FT_GetStatus( ftHandle, &nRxCnt, &nTxCnt, &eventStatus ) ) {
-			
-			// If there are characters to receive
-			if ( nRxCnt ) {
-				
-				if ( FT_OK != ( status = FT_Read( ftHandle, buf, nRxCnt, &nBytesWritten ) ) ) {
-					printf("Error: Failed to read data. return code = %d\n", status );
-					return;
-				}
-				
-				p = buf;
-				while ( *p ) {
-					if ( 0x0d == *p ) {
-						*p = 0;
-						break;
-					}
-					p++;
-				}
-				
-				printf( "Serial = %s \n", buf  );
-				break;
-				
-			}
-			
-		}
-    else {
-      printf("Error: Failed to get status. return code = %d\n", status );
-      return;
-    }
-
-  }
-  
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// openChannel
-//
-
-BOOL openChannel( FT_HANDLE ftHandle )
-{
-	char buf[BUF_SIZE];
-	DWORD retLen;
-	
-	// Set baudrate
-	FT_Purge( ftHandle, FT_PURGE_RX );
-	sprintf( buf, "scb9a\r" ); // 0xcb:0x9a
-	//sxxyy[CR] 
-	//Setup with BTR0/BTR1 CAN bit-rates where xx and yy is a hex value. 
-	//This command is only active if the CAN channel is closed.
-	//	xx	BTR0 value in hex yy	BTR1 value in hex
-	//	Example:	s031C[CR] Setup CAN with BTR0=0x03 & BTR1=0x1C
-	//	which equals to 125Kbit.
-	//	Returns:	CR (Ascii 13) for OK or BELL (Ascii 7) for ERROR.
-	if ( !( FT_OK == FT_Write( ftHandle, buf, 6, &retLen ) ) )
-	{ 
-		printf("Write failed\n");
-		return FALSE;
-	}
-	
-	// Open device
-	FT_Purge( ftHandle, FT_PURGE_RX );
-	strcpy( buf, "O\r" );
-	if ( !( FT_OK == FT_Write( ftHandle, buf, 2, &retLen ) ) )
-	{
-		printf("Write failed\n");
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// closeChannel
-//
-
-BOOL closeChannel( FT_HANDLE ftHandle )
-{
-	char buf[BUF_SIZE];
-	DWORD retLen;
-	
-	// Close device
-	FT_Purge( ftHandle, FT_PURGE_RX | FT_PURGE_TX );
-	strcpy( buf, "C\r" );
-	if ( !( FT_OK == FT_Write( ftHandle, buf, 2, &retLen ) ) )
-	{ 
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// sendFrame
-//
-
-BOOL sendFrame( FT_HANDLE ftHandle, CANMsg *pmsg )
-{
-	int i; 
-	char txbuf[BUF_SIZE];
-	unsigned long size;
-	DWORD retLen;
-	
-	retLen = 0;
-	
-	memset(txbuf, 0, sizeof(txbuf));
-	
-	if ( pmsg->flags & CANMSG_EXTENDED ) {
-		if ( pmsg->flags & CANMSG_RTR ) {
-			sprintf( txbuf, "R%08.8lX%i", pmsg->id, pmsg->len );
-			pmsg->len = 0; 
-		}
-		else {
-			sprintf( txbuf, "T%08.8lX%i", pmsg->id, pmsg->len );
-		}
-	}
-	else {
-		if ( pmsg->flags & CANMSG_RTR ) {
-			sprintf( txbuf, "r%03.3lX%i", pmsg->id, pmsg->len );
-			pmsg->len = 0; // Just dlc no data for RTR
-		}
-		else {
-			sprintf( txbuf, "t%03.3lX%i", pmsg->id, pmsg->len );
-		}
-	}
-	
-	if ( pmsg->len ) {
-		char hex[5];
-		
-		for ( i= 0; i< pmsg->len; i++ ) {
-			sprintf( hex, "%02.2X", pmsg->data[i] );
-			strcat( txbuf, hex );
-		}
-	}
-	
-	// Add CR
-	strcat( txbuf, "\r" );
-	
-	size = strlen( txbuf );
-	printf("Transmit frame=%s size=%ld\n",txbuf,size);
-	
-	// Transmit frame
-	if ( !( FT_OK == FT_Write( ftHandle, txbuf, size, &retLen ) ) )
-	{ 
-		return FALSE;
-	}
-	
-	printf("written to device=%ld\n",(long)retLen);
-	return TRUE;
-}
-
-//------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------
-
-FT_STATUS writeCommand( FT_HANDLE ftHandle, char *cmd, int cmd_size ) 
-{
-	FT_STATUS ret;
-	DWORD bytes_written = 0;
-	ret = FT_Write( ftHandle, cmd, cmd_size, &bytes_written);
-	return ret;
-}
-
-//------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------
-
-FT_STATUS readCommand( FT_HANDLE ftHandle, int length, char *cmd, int *cmd_size ) 
-{
-	FT_STATUS ret;
-	DWORD bytes_read;
-	DWORD rx_buf_count;
-	
-	do 
-	{
-		ret = FT_GetQueueStatus( ftHandle, &rx_buf_count );
-		if ( (int) rx_buf_count < length )
-		{
-			usleep(1000);
-		}
-	} 
-	while ( ( ret == FT_OK ) && ( (int) rx_buf_count < length ) );	
-	
-	if ( ret == FT_OK )
-	{
-		ret = FT_Read( ftHandle, cmd, length, &bytes_read );
-		if (ret == FT_OK )
-		{
-			*cmd_size = (int) bytes_read;
-		}
-	}
-	
-	return ret;
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-// readFrame
-//
-
-BOOL readFrame( FT_HANDLE ftHandle, CANMsg *msg )
-{	
-	char rx_buf[100];
-	int bytes_read;
-	DWORD rx_buf_count;
-	int data_offset;
-	
-	memset( msg, 0, sizeof( CANMsg ) );
-	
-	FT_GetQueueStatus( ftHandle, &rx_buf_count );
-	if ( rx_buf_count == 0 )
-	{
-		usleep(1000);
-	}
-	
-	if ( readCommand ( ftHandle, 1, rx_buf, &bytes_read ) == FT_OK )
-	{
-		switch(rx_buf[0])
-		{
-			case 't':
-				if ( readCommand ( ftHandle, 4, rx_buf, &bytes_read ) == FT_OK )
-				{
-					msg->flags = 0;
-					sscanf( rx_buf, "%03x", &msg->id);
-					sscanf( &rx_buf[3], "%1x", &data_offset);
-					msg->len = rx_buf[3] - '0';
-					
-					if ( readCommand ( ftHandle, data_offset*2+1, rx_buf, &bytes_read ) == FT_OK )
-					{
-						int data_byte;
-						for ( unsigned int i = 0; i < data_offset; i++ ) {
-							sscanf( &rx_buf[i*2], "%2x", &data_byte );
-							msg->data[i] = (char)data_byte;
-						}
-						/*
-						printf("message received: id=%lX len=%d", 
-							   msg->id, 
-							   msg->len); 
-						
-						if ( msg->len ) {
-							printf("data=");
-							
-							for ( j=0; j<msg->len; j++ ) {
-								printf("%02X ", msg->data[j]);
-							}
-						}
-						 */
-						return TRUE;
-					}
-				}
-				break;
-			case 'T':
-				break;
-			case 'r':
-				break;
-			case 'R':
-				break;
-		}
-	}
-	return FALSE;
-}
 
 long gettickscount()
 {

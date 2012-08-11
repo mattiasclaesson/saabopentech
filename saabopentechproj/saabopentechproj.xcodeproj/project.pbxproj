@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8DD76FAC0486AB0100D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
 		8DD76FB00486AB0100D96B5E /* saabopentechproj.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6A0FF2C0290799A04C91782 /* saabopentechproj.1 */; };
 		B149BCD6132E91CD000A441F /* libftd2xx.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B149BCD5132E91CD000A441F /* libftd2xx.dylib */; };
+		B1BA2C8D15001D43008896F4 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B1BA2C8C15001D43008896F4 /* main.c */; };
+		B1BA2C9715001E2B008896F4 /* lawcel_canusb_ftd2xx.c in Sources */ = {isa = PBXBuildFile; fileRef = B1BA2C9615001E2B008896F4 /* lawcel_canusb_ftd2xx.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,13 +27,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		8DD76FB20486AB0100D96B5E /* saabopentechproj */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = saabopentechproj; sourceTree = BUILT_PRODUCTS_DIR; };
 		B149BCB9132E8E71000A441F /* info_texts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = info_texts.h; sourceTree = "<group>"; };
 		B149BCC4132E8EB6000A441F /* kwp2000.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kwp2000.h; sourceTree = "<group>"; };
 		B149BCCB132E90CF000A441F /* ftd2xx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftd2xx.h; sourceTree = "<group>"; };
 		B149BCD0132E915E000A441F /* WinTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinTypes.h; sourceTree = "<group>"; };
 		B149BCD5132E91CD000A441F /* libftd2xx.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libftd2xx.dylib; path = usr/local/lib/libftd2xx.dylib; sourceTree = SDKROOT; };
+		B1BA2C8C15001D43008896F4 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B1BA2C9515001E2B008896F4 /* lawcel_canusb_ftd2xx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lawcel_canusb_ftd2xx.h; sourceTree = "<group>"; };
+		B1BA2C9615001E2B008896F4 /* lawcel_canusb_ftd2xx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lawcel_canusb_ftd2xx.c; sourceTree = "<group>"; };
 		C6A0FF2C0290799A04C91782 /* saabopentechproj.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = saabopentechproj.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,11 +65,13 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				B1BA2C9515001E2B008896F4 /* lawcel_canusb_ftd2xx.h */,
+				B1BA2C9615001E2B008896F4 /* lawcel_canusb_ftd2xx.c */,
+				B1BA2C8C15001D43008896F4 /* main.c */,
 				B149BCD0132E915E000A441F /* WinTypes.h */,
 				B149BCCB132E90CF000A441F /* ftd2xx.h */,
 				B149BCC4132E8EB6000A441F /* kwp2000.h */,
 				B149BCB9132E8E71000A441F /* info_texts.h */,
-				08FB7796FE84155DC02AAC07 /* main.c */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -137,7 +142,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76FAC0486AB0100D96B5E /* main.c in Sources */,
+				B1BA2C8D15001D43008896F4 /* main.c in Sources */,
+				B1BA2C9715001E2B008896F4 /* lawcel_canusb_ftd2xx.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
